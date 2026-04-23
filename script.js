@@ -225,10 +225,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // Override showSection to use typing effect
   const _showSection = showSection;
   function showSectionAnimated(id) {
-    sections.forEach(s => { s.classList.remove('active'); s.scrollTop = 0; });
+    sections.forEach(s => s.classList.remove('active'));
     navLinks.forEach(l => l.classList.remove('active'));
     const target = document.getElementById(id);
-    if (target) { target.classList.add('active'); target.scrollTop = 0; }
+    if (target) target.classList.add('active');
     const activeLink = document.querySelector(`.nav-link[data-section="${id}"]`);
     if (activeLink) activeLink.classList.add('active');
     typeStatus(statusMap[id] || 'OPERATIONAL');
