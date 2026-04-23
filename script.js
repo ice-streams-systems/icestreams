@@ -81,7 +81,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   initCanvas();
   setInterval(drawStream, 60);
-  window.addEventListener('resize', initCanvas);
+  window.addEventListener('resize', () => { initCanvas(); measureLayout(); });
+
+  /* ── Dynamic layout measurement ──
+     On mobile, header is height:auto so fixed top/bottom offsets need
+     to be measured from the real DOM, not a CSS variable guess. */
+  function measureLayout() {
+    const header = document.getElementById('site-header');
+    const footer = document.getElementById('site-footer');
+    if (!header || !footer) return;
+    const hh = header.getBoundingClientRect().height;
+    const fh = footer.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--mobile-header-h', hh + 'px');
+    document.documentElement.style.setProperty('--mobile-footer-h', fh + 'px');
+  }
+
+  // Measure on load, after fonts settle
+  measureLayout();
+  setTimeout(measureLayout, 400);
 
   /* ── Navigation ── */
   const sections  = document.querySelectorAll('.section');
