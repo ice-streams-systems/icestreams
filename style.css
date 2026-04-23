@@ -63,7 +63,7 @@ html, body {
 .scanlines {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 9990;
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
@@ -78,7 +78,7 @@ html, body {
 .grain {
   position: fixed;
   inset: -50%;
-  z-index: 1;
+  z-index: 9990;
   pointer-events: none;
   width: 200%; height: 200%;
   opacity: 0.035;
@@ -837,7 +837,7 @@ html, body {
 @media (max-width: 600px) {
   #site-header     { height: auto; }
 
-  #stream-canvas   { display: none; }
+  #stream-canvas   { opacity: 0.04; }
 
   /* Fix dead zones — use JS-set --header-h via inline style */
   #main-content {
