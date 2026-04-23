@@ -8,6 +8,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@300;400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+</head><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ice Streams Systems</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@300;400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -321,6 +331,395 @@
               <div class="cd-item">
                 <span class="cd-label">OPERATOR</span>
                 <span class="cd-value">Devin Sheridan / [POSITION]</span>
+              </div>
+              <div class="cd-item">
+                <span class="cd-label">JURISDICTION</span>
+                <span class="cd-value">Michigan, United States</span>
+              </div>
+              <div class="cd-item">
+                <span class="cd-label">RESPONSE TIME</span>
+                <span class="cd-value">24-48 HRS</span>
+              </div>
+            </div>
+          </div>
+          <div class="contact-form-wrap">
+            <h3 class="block-label">// TRANSMISSION</h3>
+            <form id="contact-form" class="iss-form">
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="cf-name">DESIGNATION</label>
+                  <input type="text" id="cf-name" name="name" placeholder="Full name" required />
+                </div>
+                <div class="form-field">
+                  <label for="cf-org">ORGANIZATION</label>
+                  <input type="text" id="cf-org" name="org" placeholder="Company / Entity" />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field">
+                  <label for="cf-email">CHANNEL</label>
+                  <input type="email" id="cf-email" name="email" placeholder="Email address" required />
+                </div>
+                <div class="form-field">
+                  <label for="cf-type">ENGAGEMENT TYPE</label>
+                  <select id="cf-type" name="type">
+                    <option value="">: SELECT:</option>
+                    <option value="network">Network Architecture</option>
+                    <option value="security">Security / Compliance</option>
+                    <option value="integration">Systems Integration</option>
+                    <option value="web">Web & Digital</option>
+                    <option value="scripting">Scripting / Automation</option>
+                    <option value="restricted">Restricted: Inquire</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-field full">
+                <label for="cf-brief">BRIEF</label>
+                <textarea id="cf-brief" name="brief" placeholder="Describe the problem. Be direct." required></textarea>
+              </div>
+              <!-- Honeypot: bots fill this, humans don't see it -->
+              <div class="hp-field" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+                <label for="cf-website">Website</label>
+                <input type="text" id="cf-website" name="hp" tabindex="-1" autocomplete="off"/>
+              </div>
+              <button type="submit" class="submit-btn">TRANSMIT REQUEST</button>
+              <div id="form-status" class="form-status" aria-live="polite"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer id="site-footer">
+    <div class="footer-inner">
+      <span class="footer-mark">ISS // ICE STREAMS SYSTEMS LLC</span>
+      <span class="footer-coords">41°N 86°W: MICHIGAN, US</span>
+      <span class="footer-copy">© 2026 ALL RIGHTS RESERVED</span>
+    </div>
+  </footer>
+
+  <script>
+    // Worker endpoint — UPDATE this after deploying the Cloudflare Worker
+    window.ISS_FORM_ENDPOINT = 'https://iss-contact-worker.YOUR-CF-SUBDOMAIN.workers.dev';
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>
+<body>
+
+  <!-- Scanline overlay -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- Noise grain -->
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- Stream canvas background -->
+  <canvas id="stream-canvas" aria-hidden="true"></canvas>
+
+  <!-- ── HEADER ── -->
+  <header id="site-header">
+    <div class="header-inner">
+      <div class="wordmark" id="nav-home" data-section="hero" aria-label="Ice Streams Systems home">
+        <svg class="wm-logo-svg" viewBox="0 0 900 165" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
+          <defs>
+            <clipPath id="wm-above">
+              <path d="M 0 0 L 900 0 L 900 115 L 786 111 Q 720 118 740 113 Q 670 107 700 114 Q 560 130 620 115 Q 393 95 486 115 Q 225 123 300 115 Q 150 123 150 115 Q 75 107 0 115 Z"/>
+            </clipPath>
+            <clipPath id="wm-below">
+              <path d="M 0 115 Q 75 107 150 115 Q 225 123 300 115 Q 393 95 486 115 Q 560 130 620 115 Q 670 107 700 114 Q 720 118 740 113 L 786 111 L 900 111 L 900 200 L 0 200 Z"/>
+            </clipPath>
+            <filter id="wm-glow" x="-5%" y="-80%" width="110%" height="260%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="underwater-wm" x="-5%" y="-5%" width="110%" height="110%">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+            </filter>
+          </defs>
+          <g clip-path="url(#wm-above)">
+            <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#A8D8EA" letter-spacing="-2" x="0" y="108">ICE</text>
+            <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#F0F4F8" letter-spacing="-2" x="220" y="108">STREAMS</text>
+          </g>
+          <g clip-path="url(#wm-below)" opacity="0.32" filter="url(#underwater-wm)">
+            <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#4A7B95" letter-spacing="-2" x="0" y="108">ICE</text>
+            <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#6B95AB" letter-spacing="-2" x="220" y="108">STREAMS</text>
+          </g>
+          <g filter="url(#wm-glow)">
+            <line x1="0" y1="115" x2="786" y2="115" stroke="#2E86AB" stroke-width="1.5" opacity="0.35"/>
+            <path d="M 0 115 Q 75 107 150 115 Q 225 123 300 115 Q 393 95 486 115 Q 560 130 620 115 Q 670 107 700 114 Q 720 118 740 113 L 786 111" fill="none" stroke="#A8D8EA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
+          <text font-family="Orbitron, sans-serif" font-weight="725" font-size="50" fill="#6B7B8D" letter-spacing="35" x="2" y="155">SYSTEMS</text>
+        </svg>
+      </div>
+      <nav class="site-nav">
+        <a href="#" class="nav-link" data-section="about">[01] ABOUT</a>
+        <a href="#" class="nav-link" data-section="services">[02] SERVICES</a>
+        <a href="#" class="nav-link" data-section="works">[03] SKILL SETS</a>
+        <a href="#" class="nav-link" data-section="contact">[04] CONTACT</a>
+      </nav>
+      <div class="header-status">
+        <span class="status-dot"></span>
+        <span class="status-text" id="status-text">OPERATIONAL</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── MAIN ── -->
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section id="hero" class="section active">
+      <div class="hero-inner">
+        <div class="hero-tag">[ DIRECTIVE ACTIVE: CLEARANCE REQUIRED ]</div>
+        <div class="hero-logo" aria-label="Ice Streams Systems">
+          <svg class="hero-logo-svg" viewBox="0 0 900 165" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
+            <defs>
+              <clipPath id="above-wave">
+                <path d="M 0 0 L 900 0 L 900 115 L 786 111 Q 720 118 740 113 Q 670 107 700 114 Q 560 130 620 115 Q 393 95 486 115 Q 225 123 300 115 Q 150 123 150 115 Q 75 107 0 115 Z"/>
+              </clipPath>
+              <clipPath id="below-wave">
+                <path d="M 0 115 Q 75 107 150 115 Q 225 123 300 115 Q 393 95 486 115 Q 560 130 620 115 Q 670 107 700 114 Q 720 118 740 113 L 786 111 L 900 111 L 900 200 L 0 200 Z"/>
+              </clipPath>
+              <filter id="wave-glow-f" x="-5%" y="-80%" width="110%" height="260%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+                <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="underwater-hero" x="-5%" y="-5%" width="110%" height="110%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="1.2"/>
+              </filter>
+            </defs>
+            <!-- Full opacity — above wave -->
+            <g clip-path="url(#above-wave)">
+              <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#A8D8EA" letter-spacing="-2" x="0" y="108">ICE</text>
+              <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#F0F4F8" letter-spacing="-2" x="220" y="108">STREAMS</text>
+            </g>
+            <!-- Ghost — below wave -->
+            <g clip-path="url(#below-wave)" opacity="0.32" filter="url(#underwater-hero)">
+              <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#4A7B95" letter-spacing="-2" x="0" y="108">ICE</text>
+              <text font-family="Orbitron, sans-serif" font-weight="900" font-size="96" fill="#6B95AB" letter-spacing="-2" x="220" y="108">STREAMS</text>
+            </g>
+            <!-- Wave cut line -->
+            <g filter="url(#wave-glow-f)">
+              <line x1="0" y1="115" x2="786" y2="115" stroke="#2E86AB" stroke-width="1.5" opacity="0.35"/>
+              <path d="M 0 115 Q 75 107 150 115 Q 225 123 300 115 Q 393 95 486 115 Q 560 130 620 115 Q 670 107 700 114 Q 720 118 740 113 L 786 111" fill="none" stroke="#A8D8EA" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <!-- SYSTEMS -->
+            <text font-family="Orbitron, sans-serif" font-weight="725" font-size="50" fill="#6B7B8D" letter-spacing="35" x="2" y="155">SYSTEMS</text>
+          </svg>
+        </div>
+        <div class="hero-sub">
+          <p>Infrastructure. Security. Execution.</p>
+          <p class="hero-sub-2">We build what holds.</p>
+        </div>
+        <div class="hero-data">
+          <div class="data-item"><span class="di-label">ENTITY</span><span class="di-value">ISS LLC</span></div>
+          <div class="data-item"><span class="di-label">STATUS</span><span class="di-value live">LIVE</span></div>
+          <div class="data-item"><span class="di-label">CLEARANCE</span><span class="di-value">OPEN</span></div>
+          <div class="data-item"><span class="di-label">LOCATION</span><span class="di-value">41°N 86°W</span></div>
+        </div>
+        <button class="cta-btn" data-section="contact">INITIATE CONTACT</button>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-index">01</span>
+          <h2 class="section-title">ABOUT</h2>
+          <div class="section-rule"></div>
+        </div>
+        <div class="about-grid">
+          <div class="about-block">
+            <h3 class="block-label">// ORIGIN</h3>
+            <p>Ice Streams Systems is a Michigan-based firm built on the principle that the people who understand a system are the ones who should build it.</p>
+            <p>ISS draws on direct field experience across manufacturing engineering and systems administration: CNC machining, die cast production, industrial electrical panel diagnosis and repair, control system design, and defense-grade network infrastructure built to federal compliance standards. The work has been done under real constraints, in real environments, without a safety net.</p>
+            <p>Discretion is a working discipline here, not a policy statement. Sensitive engagements handled accordingly.</p>
+          </div>
+          <div class="about-block">
+            <h3 class="block-label">// PHILOSOPHY</h3>
+            <p>Most problems aren't technical. They're organizational. Systems fail because nobody understood the whole picture before they started building.</p>
+            <p>We understand the whole picture first. Then we build: deliberately, cleanly, without loose ends.</p>
+          </div>
+          <div class="about-block">
+            <h3 class="block-label">// CAPABILITY AREAS</h3>
+            <ul class="spec-list">
+              <li>Manufacturing Engineering: CNC &amp; Die Cast Production</li>
+              <li>Industrial Electrical: Panel Diagnosis, Repair &amp; Design</li>
+              <li>Systems Administration: Network, Identity &amp; Infrastructure</li>
+              <li>Embedded Systems &amp; Microcontroller Development</li>
+              <li>Secure Enclave Architecture: CMMC 2.0 / DFARS 252.204-7012</li>
+              <li>Robotics: RAPID Programming for ABB Industrial Systems</li>
+              <li>Scripting &amp; Automation: Bash, PowerShell, C</li>
+              <li>Web &amp; Digital Infrastructure</li>
+            </ul>
+          </div>
+          <div class="about-block">
+            <h3 class="block-label">// APPROACH</h3>
+            <p>Direct communication. Exact deliverables. No scope creep, no upsell, no vague timelines. Work gets done or we talk about why.</p>
+            <p>The goal is not to stay small. ISS is built to grow into a firm that designs and ships its own products: embedded systems, operational dashboards, and platform software for industries that have been underserved by technology for too long.</p>
+            <p class="italic-note">"Built to hold."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-index">02</span>
+          <h2 class="section-title">SERVICES</h2>
+          <div class="section-rule"></div>
+        </div>
+        <p class="section-intro">Capabilities are broad. Engagements are selective. If the problem is real, we can solve it.</p>
+        <div class="services-grid">
+
+          <div class="service-card">
+            <div class="sc-index">S-01</div>
+            <h3 class="sc-title">Network Architecture</h3>
+            <p class="sc-desc">VLAN segmentation, firewall policy, routing design, infrastructure documentation. Built for compliance, built to scale.</p>
+            <div class="sc-tags"><span>ROUTING</span><span>VLAN</span><span>FIREWALL</span></div>
+          </div>
+
+          <div class="service-card">
+            <div class="sc-index">S-02</div>
+            <h3 class="sc-title">Security & Compliance</h3>
+            <p class="sc-desc">CMMC 2.0 readiness, NIST SP 800-171 gap analysis, PKI infrastructure, MFA deployment, audit trail architecture.</p>
+            <div class="sc-tags"><span>CMMC</span><span>NIST</span><span>PKI</span></div>
+          </div>
+
+          <div class="service-card">
+            <div class="sc-index">S-03</div>
+            <h3 class="sc-title">Systems Integration</h3>
+            <p class="sc-desc">OT/IT convergence, ERP overhaul, production floor automation, monitoring dashboards, data pipeline architecture. Foundation for platform and product development.</p>
+            <div class="sc-tags"><span>OT/IT</span><span>ERP</span><span>AUTOMATION</span></div>
+          </div>
+
+          <div class="service-card">
+            <div class="sc-index">S-04</div>
+            <h3 class="sc-title">Web & Digital</h3>
+            <p class="sc-desc">Production-grade static sites, hosting architecture, domain strategy, business email, contact infrastructure. No templates.</p>
+            <div class="sc-tags"><span>HTML/CSS/JS</span><span>CLOUDFLARE</span><span>DNS</span></div>
+          </div>
+
+          <div class="service-card">
+            <div class="sc-index">S-05</div>
+            <h3 class="sc-title">Scripting & Automation</h3>
+            <p class="sc-desc">Bash, PowerShell, C. If it can be automated it will be. If it can't, we'll find out why and document it.</p>
+            <div class="sc-tags"><span>BASH</span><span>POWERSHELL</span><span>C</span><span>RAPID</span></div>
+          </div>
+
+          <div class="service-card classified">
+            <div class="sc-index">S-06</div>
+            <h3 class="sc-title">[ RESTRICTED ]</h3>
+            <p class="sc-desc">Product development, embedded platform work, and engagements requiring discretion. Disclosure on contact. Inquire directly.</p>
+            <div class="sc-tags"><span>INQUIRE</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILL SETS -->
+    <section id="works" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-index">03</span>
+          <h2 class="section-title">SKILL SETS</h2>
+          <div class="section-rule"></div>
+        </div>
+        <p class="section-intro">Capabilities built through direct execution: not certification alone. Every entry below has been deployed in a real environment under real constraints.</p>
+        <div class="works-list">
+
+          <div class="work-item">
+            <div class="wi-meta">
+              <span class="wi-id">SK-01</span>
+              <span class="wi-status complete">DEPLOYED</span>
+            </div>
+            <h3 class="wi-title">Enclave Technology &amp; Secure Infrastructure</h3>
+            <p class="wi-desc">Design and deployment of isolated secure environments meeting federal compliance frameworks. Air-gapped PKI, internal certificate authority chains, CRL distribution, MFA at AAL3, audit trail architecture, LUKS encryption, and GPG key management. Built to withstand assessment: not just pass it.</p>
+            <div class="wi-tags"><span>CMMC 2.0</span><span>NIST 800-171</span><span>PKI</span><span>LUKS</span><span>FIPS MFA</span><span>DFARS</span><span>POA&amp;M</span></div>
+          </div>
+
+          <div class="work-item">
+            <div class="wi-meta">
+              <span class="wi-id">SK-02</span>
+              <span class="wi-status complete">DEPLOYED</span>
+            </div>
+            <h3 class="wi-title">Network Architecture &amp; Systems Controls</h3>
+            <p class="wi-desc">End-to-end network design: VLAN segmentation, firewall policy, routing, DNS, DHCP, and inter-VLAN access control. Directory services, Group Policy, user provisioning, and domain management across mixed OS environments. OPNsense, MikroTik, and enterprise switching at production scale.</p>
+            <div class="wi-tags"><span>VLAN</span><span>OPNsense</span><span>MikroTik</span><span>DNS</span><span>DHCP</span><span>AD</span><span>GPO</span><span>RHEL</span><span>Windows</span></div>
+          </div>
+
+          <div class="work-item">
+            <div class="wi-meta">
+              <span class="wi-id">SK-03</span>
+              <span class="wi-status active">ACTIVE</span>
+            </div>
+            <h3 class="wi-title">Scripting, Automation &amp; Systems Integration</h3>
+            <p class="wi-desc">Production scripting in Bash and PowerShell across Linux and Windows environments. Systems-level development in C. Audit and verification scripts, restricted shell hardening, scheduled task automation, OT/IT data pipeline integration, ERP taxonomy architecture, and monitoring dashboards. If it runs on a schedule, it runs clean.</p>
+            <div class="wi-tags"><span>Bash</span><span>PowerShell</span><span>C</span><span>OT/IT</span><span>nginx</span><span>rsyslog</span><span>Grafana</span><span>PostgreSQL</span></div>
+          </div>
+
+          <div class="work-item">
+            <div class="wi-meta">
+              <span class="wi-id">SK-04</span>
+              <span class="wi-status complete">DEPLOYED</span>
+            </div>
+            <h3 class="wi-title">Web Design &amp; Digital Infrastructure</h3>
+            <p class="wi-desc">Production static sites built from scratch: custom HTML, CSS, and JavaScript with intentional design systems, color theory, and fluid responsive layouts. Domain strategy, Cloudflare Pages hosting, DNS configuration, and business email architecture. No templates, no page builders.</p>
+            <div class="wi-tags"><span>HTML</span><span>CSS</span><span>JS</span><span>Cloudflare</span><span>DNS</span><span>Git</span></div>
+          </div>
+
+          <div class="work-item">
+            <div class="wi-meta">
+              <span class="wi-id">SK-05</span>
+              <span class="wi-status active">ACTIVE</span>
+            </div>
+            <h3 class="wi-title">Manufacturing Engineering, Industrial Controls &amp; Embedded Systems</h3>
+            <p class="wi-desc">Production floor experience across CNC machining and die cast manufacturing. Industrial electrical panels: fault diagnosis, component replacement, and design contribution. Sensor integration, control system architecture, and the gap between what hardware does and what software assumes it does. Microcontroller development in C. RAPID programming for ABB industrial robots as a production tool, not a hobby. The trajectory: design and ship embedded systems and operational software that modernize factory infrastructure at scale.</p>
+            <div class="wi-tags"><span>MICROCONTROLLERS</span><span>EMBEDDED</span><span>C</span><span>RAPID</span><span>ABB</span><span>PLC</span><span>INDUSTRIAL CONTROLS</span><span>DIE CAST</span><span>CNC</span><span>ELECTRICAL PANELS</span><span>OT</span></div>
+          </div>
+
+          <div class="work-item classified">
+            <div class="wi-meta">
+              <span class="wi-id">SK-??</span>
+              <span class="wi-status redacted">REDACTED</span>
+            </div>
+            <h3 class="wi-title">[ ADDITIONAL CAPABILITIES: RESTRICTED ]</h3>
+            <p class="wi-desc">Additional capabilities and active development projects exist outside this disclosure. Handled with appropriate discretion. Inquire directly.</p>
+            <div class="wi-tags"><span>RESTRICTED</span></div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-index">04</span>
+          <h2 class="section-title">CONTACT</h2>
+          <div class="section-rule"></div>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-info">
+            <h3 class="block-label">// INITIATE</h3>
+            <p>Engagements begin with a direct conversation. No intake forms that route to a queue. No automated responses.</p>
+            <p>If the problem fits, we talk. If it doesn't, we'll say so.</p>
+            <div class="contact-details">
+              <div class="cd-item">
+                <span class="cd-label">ENTITY</span>
+                <span class="cd-value">Ice Streams Systems LLC</span>
+              </div>
+              <div class="cd-item">
+                <span class="cd-label">OPERATOR</span>
+                <span class="cd-value">Devin Sheridan / [FOUNDER]</span>
               </div>
               <div class="cd-item">
                 <span class="cd-label">JURISDICTION</span>
