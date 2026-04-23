@@ -92,6 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!header || !footer) return;
     const hh = header.getBoundingClientRect().height;
     const fh = footer.getBoundingClientRect().height;
+    document.documentElement.style.setProperty('--header-h', hh + 'px');
+    document.documentElement.style.setProperty('--footer-h', fh + 'px');
     document.documentElement.style.setProperty('--mobile-header-h', hh + 'px');
     document.documentElement.style.setProperty('--mobile-footer-h', fh + 'px');
   }
