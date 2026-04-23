@@ -208,21 +208,6 @@ html, body {
   transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
 }
 
-/* Scanline texture on content area — replaces fixed overlay in scroll zone */
-.section::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 9998;
-  pointer-events: none;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.1) 2px,
-    rgba(0,0,0,0.1) 4px
-  );
-}
 
 .section.active {
   opacity: 1;
