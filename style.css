@@ -63,7 +63,7 @@ html, body {
 .scanlines {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 9990;
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
@@ -78,7 +78,7 @@ html, body {
 .grain {
   position: fixed;
   inset: -50%;
-  z-index: 1;
+  z-index: 9990;
   pointer-events: none;
   width: 200%; height: 200%;
   opacity: 0.035;
@@ -201,19 +201,16 @@ html, body {
   inset: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
   opacity: 0;
   transform: translateY(16px);
   pointer-events: none;
   transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
 }
 
-
 .section.active {
   opacity: 1;
   transform: translateY(0);
   pointer-events: all;
-  z-index: 2;
 }
 
 /* scrollbar */
