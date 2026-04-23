@@ -63,7 +63,7 @@ html, body {
 .scanlines {
   position: fixed;
   inset: 0;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
   background: repeating-linear-gradient(
     0deg,
@@ -78,7 +78,7 @@ html, body {
 .grain {
   position: fixed;
   inset: -50%;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
   width: 200%; height: 200%;
   opacity: 0.035;
@@ -193,7 +193,7 @@ html, body {
   bottom: var(--footer-h);
   left: 0; right: 0;
   z-index: 2;
-  overflow: visible;
+  overflow: hidden;
 }
 
 .section {
@@ -206,6 +206,22 @@ html, body {
   transform: translateY(16px);
   pointer-events: none;
   transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+}
+
+/* Scanline texture on content area — replaces fixed overlay in scroll zone */
+.section::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.1) 2px,
+    rgba(0,0,0,0.1) 4px
+  );
 }
 
 .section.active {
