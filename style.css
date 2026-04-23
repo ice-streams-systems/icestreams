@@ -835,38 +835,15 @@ html, body {
 
 /* ── Mobile ── */
 @media (max-width: 600px) {
-  #site-header     { height: auto; position: relative; z-index: 99999; }
-
-  /* Override fixed layout — use normal flow on mobile */
-  html, body       { overflow: auto; height: auto; min-height: 100vh; }
-
-  #main-content {
-    position: relative;
-    top: auto; bottom: auto; left: auto; right: auto;
-    flex: 1;
-    min-height: calc(100svh - 120px);
-    overflow: visible;
-  }
-
-  .section {
-    position: relative;
-    inset: auto;
-    opacity: 1;
-    transform: none;
-    pointer-events: all;
-    display: none;
-    overflow: visible;
-    min-height: calc(100svh - 120px);
-  }
-
-  .section.active  { display: flex; flex-direction: column; }
-
-  #site-footer {
-    position: relative;
-    z-index: 99999;
-  }
+  #site-header     { height: auto; }
 
   #stream-canvas   { display: none; }
+
+  /* Fix dead zones — use JS-set --header-h via inline style */
+  #main-content {
+    top: var(--mobile-header-h, 110px);
+    bottom: var(--mobile-footer-h, 52px);
+  }
 
   .header-inner {
     flex-wrap: wrap;
