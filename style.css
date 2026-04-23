@@ -34,7 +34,7 @@
   --font-body: 'Crimson Pro', serif;
 
   --header-h: clamp(58px, 8vh, 82px);
-  --footer-h: clamp(36px, 5vh, 52px);
+  --footer-h: 48px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -784,7 +784,7 @@ html, body {
 #site-footer {
   position: fixed;
   bottom: 0; left: 0; right: 0;
-  height: var(--footer-h);
+  height: 48px;
   z-index: 9999;
   background: rgba(8,8,8,0.92);
   border-top: 1px solid var(--border);
