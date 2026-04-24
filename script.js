@@ -115,6 +115,22 @@ document.addEventListener('DOMContentLoaded', () => {
     contact:  'AWAITING TRANSMISSION',
   };
 
+  /* ── Typing effect on status text ── */
+  let statusTimeout;
+  function typeStatus(text) {
+    clearTimeout(statusTimeout);
+    const el = statusTxt;
+    el.textContent = '';
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        el.textContent += text[i++];
+        statusTimeout = setTimeout(type, 38);
+      }
+    }
+    type();
+  }
+
   function showSection(id) {
     sections.forEach(s => s.classList.remove('active'));
     navLinks.forEach(l => l.classList.remove('active'));
@@ -125,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const activeLink = document.querySelector(`.nav-link[data-section="${id}"]`);
     if (activeLink) activeLink.classList.add('active');
 
-    statusTxt.textContent = statusMap[id] || 'OPERATIONAL';
+    typeStatus(statusMap[id] || 'OPERATIONAL');
   }
 
   // Nav links
@@ -185,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.textContent = 'TRANSMISSION SENT';
         btn.style.borderColor = 'var(--signal)';
         btn.style.color = 'var(--signal)';
-        statusEl.textContent = 'Signal received. We will respond within 24:48 hours.';
+        statusEl.textContent = 'Signal received. We will respond within 24–48 hours.';
         statusEl.className = 'form-status success';
         form.reset();
       } else {
@@ -208,39 +224,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 5000);
   });
 
-  /* ── Typing effect on status text ── */
-  let statusTimeout;
-  function typeStatus(text) {
-    clearTimeout(statusTimeout);
-    const el = statusTxt;
-    el.textContent = '';
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        el.textContent += text[i++];
-        statusTimeout = setTimeout(type, 38);
-      }
-    }
-    type();
-  }
-
-  // Override showSection to use typing effect
-  const _showSection = showSection;
-  function showSectionAnimated(id) {
-    sections.forEach(s => s.classList.remove('active'));
-    navLinks.forEach(l => l.classList.remove('active'));
-    const target = document.getElementById(id);
-    if (target) target.classList.add('active');
-    const activeLink = document.querySelector(`.nav-link[data-section="${id}"]`);
-    if (activeLink) activeLink.classList.add('active');
-    typeStatus(statusMap[id] || 'OPERATIONAL');
-  }
-
-  // Re-wire with animated version
-  navLinks.forEach(link => {
-    link.onclick = e => { e.preventDefault(); showSectionAnimated(link.dataset.section); };
-  });
-  document.getElementById('nav-home').onclick = () => showSectionAnimated('hero');
-  document.querySelector('.cta-btn').onclick = function() { showSectionAnimated(this.dataset.section); };
 
 });
