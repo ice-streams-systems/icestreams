@@ -3,7 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ice Streams Systems</title>
+  <title>Ice Streams Systems | Network, Security &amp; Web Infrastructure — Michigan</title>
+  <meta name="description" content="Ice Streams Systems builds and secures infrastructure for businesses that cannot afford failure. Network architecture, CMMC compliance, web design, industrial controls, and automation. Michigan-based." />
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Ice Streams Systems LLC" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://icestreams.io/" />
+  <meta property="og:title" content="Ice Streams Systems | Infrastructure. Security. Execution." />
+  <meta property="og:description" content="Michigan-based firm delivering network architecture, secure enclave design, web infrastructure, and industrial automation. Built to hold." />
+  <meta property="og:image" content="https://icestreams.io/og-image.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Ice Streams Systems" />
+  <meta name="twitter:description" content="Infrastructure. Security. Execution. Michigan-based systems engineering firm." />
+  <meta name="twitter:image" content="https://icestreams.io/og-image.png" />
+
+  <!-- Schema: LocalBusiness -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Ice Streams Systems LLC",
+    "alternateName": "ISS",
+    "url": "https://icestreams.io",
+    "email": "contact@icestreams.io",
+    "description": "Michigan-based systems engineering firm delivering network architecture, CMMC secure enclave design, web infrastructure, industrial controls, and automation.",
+    "founder": {
+      "@type": "Person",
+      "name": "Devin Sheridan"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "MI",
+      "addressCountry": "US"
+    },
+    "areaServed": {
+      "@type": "State",
+      "name": "Michigan"
+    },
+    "serviceType": [
+      "Network Architecture",
+      "CMMC Compliance",
+      "Secure Enclave Design",
+      "Web Design",
+      "Industrial Controls",
+      "Automation Scripting"
+    ],
+    "slogan": "Built to hold."
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=JetBrains+Mono:wght@300;400;600&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
@@ -24,7 +76,7 @@
   <!-- ── HEADER ── -->
   <header id="site-header">
     <div class="header-inner">
-      <div class="wordmark" id="nav-home" data-section="hero" aria-label="Ice Streams Systems home">
+      <div class="wordmark" id="nav-home" role="button" tabindex="0" data-section="hero" aria-label="Ice Streams Systems home">
         <svg class="wm-logo-svg" viewBox="0 0 900 165" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
           <defs>
             <clipPath id="wm-above">
@@ -76,7 +128,7 @@
     <section id="hero" class="section active">
       <div class="hero-inner">
         <div class="hero-tag">[ DIRECTIVE ACTIVE: CLEARANCE REQUIRED ]</div>
-        <div class="hero-logo" aria-label="Ice Streams Systems">
+        <div class="hero-logo" role="img" aria-label="Ice Streams Systems">
           <svg class="hero-logo-svg" viewBox="0 0 900 165" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
             <defs>
               <clipPath id="above-wave">
@@ -127,7 +179,7 @@
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="section">
+    <section id="about" class="section" aria-hidden="true">
       <div class="section-inner">
         <div class="section-header">
           <span class="section-index">01</span>
@@ -170,7 +222,7 @@
     </section>
 
     <!-- SERVICES -->
-    <section id="services" class="section">
+    <section id="services" class="section" aria-hidden="true">
       <div class="section-inner">
         <div class="section-header">
           <span class="section-index">02</span>
@@ -227,7 +279,7 @@
     </section>
 
     <!-- SKILL SETS -->
-    <section id="works" class="section">
+    <section id="works" class="section" aria-hidden="true">
       <div class="section-inner">
         <div class="section-header">
           <span class="section-index">03</span>
@@ -302,7 +354,7 @@
     </section>
 
     <!-- CONTACT -->
-    <section id="contact" class="section">
+    <section id="contact" class="section" aria-hidden="true">
       <div class="section-inner">
         <div class="section-header">
           <span class="section-index">04</span>
@@ -396,6 +448,6 @@
     // Worker endpoint — UPDATE this after deploying the Cloudflare Worker
     window.ISS_FORM_ENDPOINT = 'https://iss-contact-worker.YOUR-CF-SUBDOMAIN.workers.dev';
   </script>
-  <script src="script.js"></script>
+  <script src="script.js" defer>
 </body>
 </html>
