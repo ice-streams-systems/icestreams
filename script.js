@@ -132,11 +132,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function showSection(id) {
-    sections.forEach(s => s.classList.remove('active'));
+    sections.forEach(s => {
+      s.classList.remove('active');
+      s.setAttribute('aria-hidden', 'true');
+    });
     navLinks.forEach(l => l.classList.remove('active'));
 
     const target = document.getElementById(id);
-    if (target) target.classList.add('active');
+    if (target) {
+      target.classList.add('active');
+      target.setAttribute('aria-hidden', 'false');
+    }
 
     const activeLink = document.querySelector(`.nav-link[data-section="${id}"]`);
     if (activeLink) activeLink.classList.add('active');
@@ -152,8 +158,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Wordmark → home
-  document.getElementById('nav-home').addEventListener('click', () => showSection('hero'));
+  // Wordmark → home (click + keyboard for role=button)
+  const navHome = document.getElementById('nav-home');
+  navHome.addEventListener('click', () => showSection('hero'));
+  navHome.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showSection('hero'); }
+  });
 
   // CTA button
   document.querySelector('.cta-btn').addEventListener('click', function() {
