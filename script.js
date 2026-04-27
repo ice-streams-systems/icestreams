@@ -1,238 +1,215 @@
-/* ═══════════════════════════════════════
-   ICE STREAMS SYSTEMS — script.js
-═══════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function () {
+    const dynamicContent = document.getElementById('dynamic-content');
 
-document.addEventListener('DOMContentLoaded', () => {
+    // ── Helpers ──────────────────────────────────────────────────────────────
 
-  /* ── Stream canvas ── */
-  const canvas  = document.getElementById('stream-canvas');
-  const ctx     = canvas.getContext('2d');
-  let cols, drops;
+    const isTouchDevice = () => window.matchMedia('(hover: none)').matches;
 
-  const CHARS = '01アイウエオカキクケコサシスセソタチツテトナニヌネノ▸▹◈◉─│┼╋';
-  const COLOR = '#A8D8EA';
-
-  function initCanvas() {
-    canvas.width  = window.innerWidth;
-    canvas.height = window.innerHeight;
-    const fontSize = 13;
-    cols  = Math.floor(canvas.width / fontSize);
-    drops = Array(cols).fill(0).map(() => Math.random() * -canvas.height);
-  }
-
-  let glitchColumn = -1;
-  let glitchTimer  = 0;
-
-  function drawStream() {
-    ctx.fillStyle = 'rgba(8,8,8,0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = '13px JetBrains Mono, monospace';
-    const fontSize = 13;
-
-    // Trigger glitch ~every 100 frames: one column flashes spice orange
-    glitchTimer++;
-    if (glitchTimer > 100 && Math.random() > 0.5) {
-      glitchColumn = Math.floor(Math.random() * cols);
-      glitchTimer = 0;
-    }
-
-    drops.forEach((y, i) => {
-      const char = CHARS[Math.floor(Math.random() * CHARS.length)];
-      if (i === glitchColumn) {
-        ctx.fillStyle = '#FF8C00';
-        ctx.globalAlpha = Math.random() * 0.5 + 0.3;
-      } else {
-        ctx.fillStyle = COLOR;
-        ctx.globalAlpha = Math.random() * 0.4 + 0.1;
-      }
-      ctx.fillText(char, i * fontSize, y);
-      ctx.globalAlpha = 1;
-      if (y > canvas.height && Math.random() > 0.975) drops[i] = 0;
-      drops[i] += fontSize;
-    });
-
-    // Fade glitch column back out
-    if (glitchTimer > 8) glitchColumn = -1;
-
-    // Draw faint crosshair marks at canvas corners — tactical detail
-    drawCrosshairs();
-  }
-
-  function drawCrosshairs() {
-    const size = 12;
-    const off  = 40;
-    ctx.strokeStyle = 'rgba(46,134,171,0.35)';
-    ctx.lineWidth = 1;
-    const corners = [
-      [off, off],
-      [canvas.width - off, off],
-      [off, canvas.height - off],
-      [canvas.width - off, canvas.height - off]
-    ];
-    corners.forEach(([x, y]) => {
-      ctx.beginPath();
-      ctx.moveTo(x - size, y);
-      ctx.lineTo(x + size, y);
-      ctx.moveTo(x, y - size);
-      ctx.lineTo(x, y + size);
-      ctx.stroke();
-    });
-  }
-
-  initCanvas();
-  setInterval(drawStream, 60);
-  window.addEventListener('resize', () => { initCanvas(); measureLayout(); });
-
-  /* ── Dynamic layout measurement ──
-     On mobile, header is height:auto so fixed top/bottom offsets need
-     to be measured from the real DOM, not a CSS variable guess. */
-  function measureLayout() {
-    const header = document.getElementById('site-header');
-    const footer = document.getElementById('site-footer');
-    if (!header || !footer) return;
-    const hh = header.getBoundingClientRect().height;
-    const fh = footer.getBoundingClientRect().height;
-    document.documentElement.style.setProperty('--header-h', hh + 'px');
-    document.documentElement.style.setProperty('--footer-h', fh + 'px');
-    document.documentElement.style.setProperty('--mobile-header-h', hh + 'px');
-    document.documentElement.style.setProperty('--mobile-footer-h', fh + 'px');
-  }
-
-  // Measure on load, after fonts settle
-  measureLayout();
-  setTimeout(measureLayout, 400);
-
-  /* ── Navigation ── */
-  const sections  = document.querySelectorAll('.section');
-  const navLinks  = document.querySelectorAll('.nav-link');
-  const statusTxt = document.getElementById('status-text');
-
-  const statusMap = {
-    hero:     'OPERATIONAL',
-    about:    'PROFILE: LOADED',
-    services: 'CAPABILITIES: ACTIVE',
-    works:    'SKILL SETS: LOADED',
-    contact:  'AWAITING TRANSMISSION',
-  };
-
-  /* ── Typing effect on status text ── */
-  let statusTimeout;
-  function typeStatus(text) {
-    clearTimeout(statusTimeout);
-    const el = statusTxt;
-    el.textContent = '';
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        el.textContent += text[i++];
-        statusTimeout = setTimeout(type, 38);
-      }
-    }
-    type();
-  }
-
-  function showSection(id) {
-    sections.forEach(s => {
-      s.classList.remove('active');
-      s.setAttribute('aria-hidden', 'true');
-    });
-    navLinks.forEach(l => l.classList.remove('active'));
-
-    const target = document.getElementById(id);
-    if (target) {
-      target.classList.add('active');
-      target.setAttribute('aria-hidden', 'false');
-    }
-
-    const activeLink = document.querySelector(`.nav-link[data-section="${id}"]`);
-    if (activeLink) activeLink.classList.add('active');
-
-    typeStatus(statusMap[id] || 'OPERATIONAL');
-  }
-
-  // Nav links
-  navLinks.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      showSection(link.dataset.section);
-    });
-  });
-
-  // Wordmark → home (click + keyboard for role=button)
-  const navHome = document.getElementById('nav-home');
-  navHome.addEventListener('click', () => showSection('hero'));
-  navHome.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showSection('hero'); }
-  });
-
-  // CTA button
-  document.querySelector('.cta-btn').addEventListener('click', function() {
-    showSection(this.dataset.section);
-  });
-
-  // Init
-  showSection('hero');
-
-  /* ── Form submission ── */
-  const form = document.getElementById('contact-form');
-  const statusEl = document.getElementById('form-status');
-
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    const btn = this.querySelector('.submit-btn');
-
-    // Lock UI
-    btn.disabled = true;
-    btn.textContent = 'TRANSMITTING...';
-    btn.style.borderColor = 'var(--ice)';
-    statusEl.textContent = '';
-    statusEl.className = 'form-status';
-
-    // Gather payload
-    const payload = {
-      name:  this.elements['name'].value,
-      org:   this.elements['org'].value,
-      email: this.elements['email'].value,
-      type:  this.elements['type'].value,
-      brief: this.elements['brief'].value,
-      hp:    this.elements['hp'].value,
+    const closeAllDropdowns = () => {
+        document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
     };
 
-    try {
-      const res = await fetch(window.ISS_FORM_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
+    const loadContent = (tabName) => {
+        closeAllDropdowns();
 
-      const data = await res.json().catch(() => ({}));
+        const html = contentMap[tabName] || '<h2>Page not found!</h2>';
+        dynamicContent.innerHTML = html;
 
-      if (res.ok && data.ok) {
-        btn.textContent = 'TRANSMISSION SENT';
-        btn.style.borderColor = 'var(--signal)';
-        btn.style.color = 'var(--signal)';
-        statusEl.textContent = 'Signal received. We will respond within 24–48 hours.';
-        statusEl.className = 'form-status success';
-        form.reset();
-      } else {
-        throw new Error(data.error || 'UNKNOWN');
-      }
-    } catch (err) {
-      console.error('Form error:', err);
-      btn.textContent = 'TRANSMISSION FAILED';
-      btn.style.borderColor = 'var(--spice)';
-      btn.style.color = 'var(--spice)';
-      statusEl.textContent = 'Signal lost. Please try again or email contact@icestreams.io directly.';
-      statusEl.className = 'form-status error';
-    }
+        dynamicContent.style.animation = 'none';
+        dynamicContent.offsetHeight; // force reflow
+        dynamicContent.style.animation = '';
 
-    setTimeout(() => {
-      btn.disabled = false;
-      btn.textContent = 'TRANSMIT REQUEST';
-      btn.style.borderColor = '';
-      btn.style.color = '';
-    }, 5000);
-  });
+        dynamicContent.classList.toggle('no-scroll', tabName === 'homepage');
+        dynamicContent.scrollTop = 0;
+        setTimeout(() => { dynamicContent.scrollTop = 0; }, 120);
 
+        document.querySelectorAll('nav ul li a').forEach(t => t.classList.remove('active'));
+        const active = document.querySelector(
+            `nav ul li a[data-tab="${tabName}"], nav ul li a#${tabName}`
+        );
+        if (active) active.classList.add('active');
+    };
 
+    // ── Dropdown trigger ("Services") ────────────────────────────────────────
+    //
+    // Strategy:
+    //   Touch devices  — first tap opens the menu; second tap navigates.
+    //   Pointer devices — CSS :hover opens the menu; a click navigates.
+    //
+    // We track state with a `data-dropdown-open` attribute so the second-tap
+    // detection survives between event handlers without closure confusion.
+
+    document.querySelectorAll('.dropdown > a').forEach((trigger) => {
+
+        // ── Touch: use touchend for instant, no-delay response ───────────────
+        trigger.addEventListener('touchend', function (e) {
+            const menu = this.parentElement.querySelector('.dropdown-menu');
+            const isOpen = menu.classList.contains('open');
+
+            if (!isOpen) {
+                // First tap — open the menu, suppress the ghost click
+                e.preventDefault();
+                e.stopPropagation();
+                closeAllDropdowns();
+                menu.classList.add('open');
+            }
+            // Second tap — do nothing; let the browser fire the natural click
+            // which the click handler below will catch and navigate with.
+        });
+
+        // ── Click: second tap on touch navigates; pointer devices navigate immediately ──
+        trigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (isTouchDevice()) {
+                // Only reach here on second tap (menu already open) — navigate.
+                const menu = this.parentElement.querySelector('.dropdown-menu');
+                if (menu.classList.contains('open')) {
+                    loadContent(this.getAttribute('data-tab') || this.id);
+                } else {
+                    // Edge case: menu closed somehow, reopen it.
+                    closeAllDropdowns();
+                    menu.classList.add('open');
+                }
+                return;
+            }
+
+            // Pointer device — CSS :hover already handles open/close.
+            // A click should simply navigate to the Services page.
+            loadContent(this.getAttribute('data-tab') || this.id);
+        });
+    });
+
+    // ── Dropdown child items ─────────────────────────────────────────────────
+
+    document.querySelectorAll('.dropdown-menu a').forEach((item) => {
+
+        // touchend gives instant response without the 300 ms click delay
+        item.addEventListener('touchend', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            loadContent(this.getAttribute('data-tab') || this.id);
+        });
+
+        // click covers non-touch devices (and is a safe fallback)
+        item.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            loadContent(this.getAttribute('data-tab') || this.id);
+        });
+    });
+
+    // ── Close on outside tap / click ─────────────────────────────────────────
+
+    // touchstart for immediate close on touch; click for pointer devices.
+    ['touchstart', 'click'].forEach(eventType => {
+        document.addEventListener(eventType, function (e) {
+            if (!e.target.closest('.dropdown')) {
+                closeAllDropdowns();
+            }
+        }, { passive: eventType === 'touchstart' });
+    });
+
+    // ── Non-dropdown nav links ───────────────────────────────────────────────
+
+    document.querySelectorAll('nav ul li a').forEach((tab) => {
+        if (tab.closest('.dropdown')) return;
+        tab.addEventListener('click', function (e) {
+            e.preventDefault();
+            loadContent(this.getAttribute('data-tab') || this.id);
+        });
+    });
+
+    // ── Logo ─────────────────────────────────────────────────────────────────
+
+    document.querySelector('a.logo').addEventListener('click', function (e) {
+        e.preventDefault();
+        loadContent('homepage');
+    });
+
+    // ── Form submission ───────────────────────────────────────────────────────
+    //
+    // Handles both #request-form and #estimate-form.
+    // Forms are injected into #dynamic-content by loadContent(), so we listen
+    // on the document and filter by target — this survives re-renders.
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // WORKER URL
+    // Staging: points at the ISS shared worker on icestreams.io
+    // Launch:  swap this for the Rockstar production worker URL once deployed
+    //          e.g. 'https://api.rockstarautorepair.com/contact'
+    // ─────────────────────────────────────────────────────────────────────────
+    const WORKER_URL = 'https://iss-contact-worker.devin-sheridan93.workers.dev';
+
+    document.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const form   = e.target;
+        const button = form.querySelector('button[type="submit"]');
+
+        // Only handle the two known forms
+        if (form.id !== 'request-form' && form.id !== 'estimate-form') return;
+
+        const isRequest = form.id === 'request-form';
+
+        // ── Collect fields ──
+        const name    = form.querySelector('[name="name"]')?.value.trim()    || '';
+        const email   = form.querySelector('[name="email"]')?.value.trim()   || '';
+        const phone   = form.querySelector('[name="phone"]')?.value.trim()   || '';
+        const year    = form.querySelector('[name="year"]')?.value.trim()    || '';
+        const make    = form.querySelector('[name="make"]')?.value.trim()    || '';
+        const model   = form.querySelector('[name="model"]')?.value.trim()   || '';
+        const service = form.querySelector('[name="service"]')?.value.trim() || '';
+
+        // ── Build payload the Worker expects ──
+        // 'brief' bundles vehicle + service info into the body field.
+        // Must be at least 10 chars — validated server-side.
+        const brief = `Phone: ${phone}\nVehicle: ${year} ${make} ${model}\n\nService: ${service}`;
+        const type  = isRequest ? 'Service Request' : 'Estimate Request';
+
+        // ── Disable button while in flight ──
+        const originalLabel = button.textContent;
+        button.disabled     = true;
+        button.textContent  = 'Sending...';
+
+        try {
+            const res = await fetch(WORKER_URL, {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({
+                    name,
+                    email,
+                    type,
+                    brief,
+                    hp: '',   // honeypot — always empty from a real browser
+                }),
+            });
+
+            const data = await res.json();
+
+            if (data.ok) {
+                button.textContent = '✓ Sent!';
+                form.reset();
+                // Re-enable after a delay so they can submit again if needed
+                setTimeout(() => {
+                    button.disabled    = false;
+                    button.textContent = originalLabel;
+                }, 4000);
+            } else {
+                console.error('Worker error response:', data);
+                button.textContent = 'Failed — try again';
+                button.disabled    = false;
+            }
+
+        } catch (err) {
+            console.error('Submit error:', err);
+            button.textContent = 'Failed — try again';
+            button.disabled    = false;
+        }
+    });
+
+    // ── Initial load ─────────────────────────────────────────────────────────
+
+    loadContent('homepage');
 });
